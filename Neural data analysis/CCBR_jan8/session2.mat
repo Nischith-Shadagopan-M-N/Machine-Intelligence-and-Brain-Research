@@ -1,0 +1,45 @@
+%% Jan 8th
+clear all
+
+T = 5;
+Dt = 1e-3;
+N = 100;
+Timepoints = T/Dt;
+FR = 5;
+R = rand([Timepoints, N]);
+Lambda = FR*Dt;
+Spikes=zeros(Timepoints, N);
+Spikes(R<Lambda)=1;
+figure;
+subplot(3,1,1)
+[IndexTime, IndexTrial] = find(Spikes==1);
+plot(IndexTime, IndexTrial, '.', 'markersize', 1)
+TuningCurve = sum(Spikes,2)';
+subplot(3,1,2);
+plot(TuningCurve)
+subplot(3,1,3);
+plot(movmean(TuningCurve, 1000))
+temp1 = makeSparsity(TuningCurve)
+
+EquispacedAngles = linspace(0, pi, Timepoints);
+FR = 20 * sin(EquispacedAngles);
+Lambda = FR*Dt;
+Lambda = Lambda';
+Spikes(R<Lambda)=1;
+figure;
+subplot(3,1,1)
+[IndexTime, IndexTrial] = find(Spikes==1);
+plot(IndexTime, IndexTrial, '.', 'markersize', 1)
+TuningCurve = sum(Spikes,2)';
+subplot(3,1,2);
+plot(TuningCurve)
+subplot(3,1,3);
+plot(movmean(TuningCurve, 1000))
+temp2 = makeSparsity(TuningCurve)
+
+ %%
+ clear all
+ load('SampleLFP_Speed.mat')
+ 
+ 
+
